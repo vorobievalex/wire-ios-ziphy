@@ -107,7 +107,7 @@ import Foundation
     public func fetchImageData(forZiph ziph: Ziph, imageType: ZiphyImageType, completion: @escaping (_ imageData: Data?, _ imageRepresentation: ZiphyImageRep?, _ error: Error?) -> Void) {
         let representation = ziph.ziphyImages[ZiphyClient.fromZiphyImageTypeToString(imageType)]!
 
-        if let imageData = self.imageCache.object(forKey: representation.url as NSString) {
+        if let imageData = self.imageCache.object(forKey: representation.mp4 as NSString) {
             completion(imageData as Data, representation, nil)
         }
         
