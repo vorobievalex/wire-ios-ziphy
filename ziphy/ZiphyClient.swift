@@ -33,7 +33,7 @@ public typealias ZiphyImageCallBack = (_ success:Bool, _ image:ZiphyImageRep?, _
 @objc public final class ZiphyClient : NSObject {
     
     
-    open static var logLevel:ZiphyLogLevel = ZiphyLogLevel.error
+    open static var logLevel:ZiphyLogLevel = ZiphyLogLevel.verbose
     let host:String
     let requester:ZiphyURLRequester
     let downloadSession:URLSession
