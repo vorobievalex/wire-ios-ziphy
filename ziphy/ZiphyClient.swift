@@ -182,16 +182,18 @@ public typealias ZiphyImageCallBack = (_ success:Bool, _ image:ZiphyImageRep?, _
             
             if let ziphyImage = ziph.imageWithType(imageType) {
                 
-                LogDebug("Trying to fetch image at url \(ziphyImage.mp4 ?? ziphyImage.url)")
+                let imageURL = ziphyImage.mp4.isEmpty ? ziphyImage.url : ziphyImage.mp4
                 
-                if let components = URLComponents(string:(ziphyImage.mp4 ?? ziphyImage.url)) {
+                LogDebug("Trying to fetch image at url \(imageURL)")
+                
+                if let components = URLComponents(string:imageURL) {
                     
                     if let url = components.url {
                         
                         let request = URLRequest(url:url)
                         
                         self.performDataTask(request, requester:self.downloadSession).then { (data, response, error) -> Error? in
-                            LogDebug("Fetch of image at url \(ziphyImage.mp4 ?? ziphyImage.url) succeeded")
+                            LogDebug("Fetch of image at url \(imageURL) succeeded")
                             
                             performOnQueue(callBackQueue) {
                                 onCompletion(true, ziphyImage, ziph, data, error)
