@@ -184,8 +184,10 @@ public typealias ZiphyImageCallBack = (_ success:Bool, _ image:ZiphyImageRep?, _
                 
                 let imageURL = ziphyImage.mp4.isEmpty ? ziphyImage.url : ziphyImage.mp4
                 
+                LogDebug("mp4= {\(ziphyImage.mp4)}")
+                LogDebug("mp4.isEmpty= {\(ziphyImage.mp4.isEmpty)}")
                 LogDebug("Trying to fetch image at url \(imageURL)")
-                
+
                 if let components = URLComponents(string:imageURL) {
                     
                     if let url = components.url {

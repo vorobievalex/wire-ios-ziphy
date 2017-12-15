@@ -42,10 +42,10 @@ func Log(_ message: String,
     line: Int = #line,
     level:ZiphyLogLevel) {
         
-        //if ZiphyClient.logLevel <= level {
+        if ZiphyClient.logLevel <= level {
             
             NSLog("%@", "\"\(message)\" (File: \(file), Function: \(function), Line: \(line))")
-        //}
+        }
 }
 
 func LogVerbose(_ message:String,
