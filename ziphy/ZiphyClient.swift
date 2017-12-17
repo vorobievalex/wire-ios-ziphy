@@ -322,7 +322,9 @@ public typealias ZiphyImageCallBack = (_ success:Bool, _ image:ZiphyImageRep?, _
                     
                     Ziph(dictionary: aGif)
                 }
-                
+                LogError("gifsArray: \(String(describing: gifsArray))")
+
+
                 let arrayOfPossibleZiphs = gifsArray.filter { return fromSearchResultToZiph($0) != nil }
                 let ziphs = arrayOfPossibleZiphs.map { return Ziph(dictionary:$0)! }
                 
