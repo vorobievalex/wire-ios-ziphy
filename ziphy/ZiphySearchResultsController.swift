@@ -113,7 +113,7 @@ import Foundation
         
         self.ziphyClient?.fetchImage(DispatchQueue.main, ziph: ziph, imageType: imageType, onCompletion: { [weak self] (success, imageRepresentation, ziph, imageData, error) in
             if error == nil, let imageData = imageData, let imageRepresentation = imageRepresentation {
-                self?.imageCache.setObject(imageData as NSData, forKey: imageRepresentation.url as NSString)
+                self?.imageCache.setObject(imageData as NSData, forKey: imageRepresentation.mp4 as NSString)
                 completion(imageData, imageRepresentation, nil)
             } else {
                 completion(nil, nil, error)
