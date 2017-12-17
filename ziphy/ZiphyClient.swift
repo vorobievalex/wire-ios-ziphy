@@ -21,7 +21,7 @@ import Foundation
 
 private let apiVersionPath = "/v1"
 private let gifsEndpoint = "/gifs"
-private let searchEndpoint = gifsEndpoint + "/search"
+private let searchEndpoint = gifsEndpoint + "/translate"
 private let randomEndpoint = gifsEndpoint + "/random"
 private let trendingEndpoint = gifsEndpoint + "/trending"
 private let requestScheme = "https"
