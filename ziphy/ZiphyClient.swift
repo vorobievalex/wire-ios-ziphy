@@ -306,13 +306,14 @@ public typealias ZiphyImageCallBack = (_ success:Bool, _ image:ZiphyImageRep?, _
                         if let fw = imgs["fixed_width"] as? [String:Any] {
                             print("fixed_width gif size: \(fw["size"] ?? "NA")")
                             print("fixed_width webp size: \(fw["webp_size"] ?? "NA")")
-                            webp_size_total_50 += Int(fw["webp_size"] as! String)!
+                            
                         }
                         if let fw = imgs["fixed_width_downsampled"] as? [String:Any] {
                             print("fixed_width_downsampled gif size: \(fw["size"] ?? "NA")")
                             print("fixed_width_downsampled webp size: \(fw["webp_size"] ?? "NA")")
                             print("\n")
                             gif_size_total_50 += Int(fw["size"] as! String)!
+                            webp_size_total_50 += Int(fw["webp_size"] as! String)!
                         }
                     }
                 }
