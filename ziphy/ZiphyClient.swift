@@ -33,7 +33,7 @@ public typealias ZiphyImageCallBack = (_ success:Bool, _ image:ZiphyImageRep?, _
 @objc public final class ZiphyClient : NSObject {
     
     
-    open static var logLevel:ZiphyLogLevel = ZiphyLogLevel.error
+    open static var logLevel:ZiphyLogLevel = ZiphyLogLevel.verbose
     let host:String
     let requester:ZiphyURLRequester
     let downloadSession:URLSession
@@ -182,16 +182,16 @@ public typealias ZiphyImageCallBack = (_ success:Bool, _ image:ZiphyImageRep?, _
             
             if let ziphyImage = ziph.imageWithType(imageType) {
                 
-                LogDebug("Trying to fetch image at url \(ziphyImage.url)")
+                LogDebug("Trying to fetch image at url \(ziphyImage.webp)")
                 
-                if let components = URLComponents(string:ziphyImage.url) {
+                if let components = URLComponents(string:ziphyImage.webp) {
                     
                     if let url = components.url {
                         
                         let request = URLRequest(url:url)
                         
                         self.performDataTask(request, requester:self.downloadSession).then { (data, response, error) -> Error? in
-                            LogDebug("Fetch of image at url \(ziphyImage.url) succeeded")
+                            LogDebug("Fetch of image at url \(ziphyImage.webp) succeeded")
                             
                             performOnQueue(callBackQueue) {
                                 onCompletion(true, ziphyImage, ziph, data, error)
@@ -295,8 +295,31 @@ public typealias ZiphyImageCallBack = (_ success:Bool, _ image:ZiphyImageRep?, _
         do {
             let maybeResponse = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions(rawValue: 0)) as? [String:AnyObject]
             
+            print("maybeResponse:\n\(String(describing:maybeResponse))")
+            
             if let gifsArray = maybeResponse?["data"] as? [[String:AnyObject]] {
                 
+                var gif_size_total_50 = 0, webp_size_total_50 = 0
+
+                _ = gifsArray.map{
+                    if let imgs = $0["images"] as? [String:Any] {
+                        if let fw = imgs["fixed_width"] as? [String:Any] {
+                            print("fixed_width gif size: \(fw["size"] ?? "NA")")
+                            print("fixed_width webp size: \(fw["webp_size"] ?? "NA")")
+                            webp_size_total_50 += Int(fw["webp_size"] as! String)!
+                        }
+                        if let fw = imgs["fixed_width_downsampled"] as? [String:Any] {
+                            print("fixed_width_downsampled gif size: \(fw["size"] ?? "NA")")
+                            print("fixed_width_downsampled webp size: \(fw["webp_size"] ?? "NA")")
+                            print("\n")
+                            gif_size_total_50 += Int(fw["size"] as! String)!
+                        }
+                    }
+                }
+                
+                print("webp total: \(webp_size_total_50)")
+                print("gif total: \(gif_size_total_50)")
+
                 let fromSearchResultToZiph = { (aGif:[String:AnyObject]) -> Ziph? in
                     
                     Ziph(dictionary: aGif)
