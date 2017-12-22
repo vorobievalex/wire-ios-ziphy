@@ -107,13 +107,13 @@ import Foundation
     public func fetchImageData(forZiph ziph: Ziph, imageType: ZiphyImageType, completion: @escaping (_ imageData: Data?, _ imageRepresentation: ZiphyImageRep?, _ error: Error?) -> Void) {
         let representation = ziph.ziphyImages[ZiphyClient.fromZiphyImageTypeToString(imageType)]!
 
-        if let imageData = self.imageCache.object(forKey: representation.url as NSString) {
+        if let imageData = self.imageCache.object(forKey: representation.webp as NSString) {
             completion(imageData as Data, representation, nil)
         }
         
         self.ziphyClient?.fetchImage(DispatchQueue.main, ziph: ziph, imageType: imageType, onCompletion: { [weak self] (success, imageRepresentation, ziph, imageData, error) in
             if error == nil, let imageData = imageData, let imageRepresentation = imageRepresentation {
-                self?.imageCache.setObject(imageData as NSData, forKey: imageRepresentation.url as NSString)
+                self?.imageCache.setObject(imageData as NSData, forKey: imageRepresentation.webp as NSString)
                 completion(imageData, imageRepresentation, nil)
             } else {
                 completion(nil, nil, error)
